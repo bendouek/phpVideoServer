@@ -12,67 +12,38 @@
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
   ga('create', 'UA-99114957-3', 'auto');
   ga('send', 'pageview');
+
   </script>
   <script
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+  <link href="http://youtubegems.com/bethtest/style.css" rel="stylesheet">
 
-  <style>
-    body {
-      background-color: #000000;
-      height: 100vh;
-      overflow: hidden;
-      color:#f1f1f1;
-    }
-    .row {
-      height: 100%;
-    }
-    .everything {
-      height: 100%;
-    }
-  </style>
 
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
 </head>
 <body>
-  <?php
-    $servername = "localhost";
-    $username = "bendouek_beth";
-    $password = "Beth8899";
-    $dbname = "bendouek_gemsContent";
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "SELECT * FROM test";
-    $result = $conn->query($sql);
-    ?>
-
-<div class="container-fluid everything">
-  <div class="row align-items-center justify-content-center">
-      <?php
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-                echo "<div class=\"panel panel-default\">";
-                echo "ID: " . $row["ID"] .  " <br> <h1> Name: " . $row["NAME"];
-                echo " </h1> <br><iframe width=\"854\" height=\"480\" src=\"" . $row["URL"];
-                echo "\" frameborder=\"0\" allowfullscreen></iframe> <br> COMMENT: " . $row["COMMENT"] ."<br>";
-                echo "</div>";
-            }
-        } else {
-            echo "0 results";
-        }
-        $conn->close();
-      ?>
+<div class="container-fluid">
+  <div class='header-wrapper row align-items-end'>
+      <div><img src='http://youtubegems.com/ytg_logo.png' height='100px'/></div>
+      <div>YTG</div>
   </div>
-</div>
+  <div class="main-content">
+      <div class='vid-title'><h3>Primitive Technology: Forge Blower</h3></div>
+      <div class="row vid-content align-items-center justify-content-center">
+        <div class='col-2'><img src='http://youtubegems.com/bethtest/prev.png' width='150px' /></div>
+        <div class='vid-container col-8'>
+          <div class='video-wrapper'><iframe src="https://www.youtube.com/embed/VVV4xeWBIxE?modestbranding=1&rel=0&showinfo=0" frameborder="1" allowfullscreen></iframe></div>
+        </div>
+        <div class='col-2'><img src='http://youtubegems.com/bethtest/next.png' width='150px' /></div>
+      </div>
+  </div>
+</body>
 </body>
 </html>
