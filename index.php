@@ -1,4 +1,10 @@
 <!doctype html>
+ <?php
+    include 'getVideo.php';
+
+    $vid = vidInit();
+?>
+
 
 <html lang="en">
 <head>
@@ -17,69 +23,67 @@
   ga('send', 'pageview');
 
   </script>
-  <script
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-4380878725837735",
+	    enable_page_level_ads: true
+	  });
+	</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+  <link href="http://youtubegems.com/style.css" rel="stylesheet">
 
-  <style>
-    body {
-      background-color: #000000;
-      height: 100vh;
-      overflow: hidden;
-      color:#f1f1f1;
-    }
-
-    .row {
-      height: 100%;
-    }
-
-    .everything {
-      height: 100%;
-    }
-  </style>
 
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
 </head>
 <body>
-  <?php
-    $servername = "localhost";
-    $username = "bendouek_beth";
-    $password = "Beth8899";
-    $dbname = "bendouek_gemsContent";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "SELECT * FROM test";
-    $result = $conn->query($sql);
-    ?>
-
-<div class="container-fluid everything">
-  <div class="row align-items-center justify-content-center">
-      <?php
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-                echo "<div class=\"panel panel-default\">";
-                echo "ID: " . $row["ID"] .  " <br> <h1> Name: " . $row["NAME"];
-                echo " </h1> <br><iframe width=\"854\" height=\"480\" src=\"" . $row["URL"];
-                echo "\" frameborder=\"0\" allowfullscreen></iframe> <br> COMMENT: " . $row["COMMENT"] ."<br>";
-                echo "</div>";
-            }
-        } else {
-            echo "0 results";
-        }
-        $conn->close();
-      ?>
+<div class="container-fluid">
+  <div class='header-wrapper row align-items-end'>
+      <div><img src='http://youtubegems.com/ytg_logo.png' height='100px'/></div>
+      <div>YTG</div>
   </div>
-</div>
+  <div class="main-content">
+      <div id='vid-title'><h3><?php echo $vid["NAME"]; ?></h3></div>
+      <div class="row vid-content align-items-center justify-content-center">
+        <div class='col-2' id='prev'><img src='http://youtubegems.com/prev.png' width='150px' /></div>
+        <div class='vid-container col-8'>
+          <div id='video-wrapper'><iframe id="vidframe" src="<?php echo $vid["URL"]; ?>" frameborder="1" allowfullscreen></iframe></div>
+        </div>
+        <div class='col-2' id='next'><img src='http://youtubegems.com/next.png' width='150px' /></div>
+      </div>
+  </div>
+  <script>
+
+  var nextVideo = function(id) {
+    // request a video which doesn't have the id of the current one 
+    var ajaxNext = new XMLHttpRequest();
+    $('#video-wrapper').html("LOADING");
+    ajaxNext.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var newVid = JSON.parse(this.responseText);
+            $('#video-wrapper').html('<iframe id="vidframe" src="' + newVid["URL"] + '" frameborder="1" allowfullscreen></iframe>');
+            window.currentID = newVid['ID'];
+            $('#vid-title').html("<h3>" + newVid['NAME'] + "</h3>");
+        }
+    };
+    ajaxNext.open("GET", "getVideo.php?q=next&id=" + window.currentID, true);
+    ajaxNext.send();
+  }
+
+
+  $(document).ready(function() {
+    <?php echo 'window.currentID = '.$vid["ID"].';'; ?>
+    console.log(window.currentID + ' is the first id ');
+    $('#prev').click(()=> {alert('p');});
+    $('#next').click(() => {nextVideo(window.currentID);});
+  });
+  </script>
+</body>
 </body>
 </html>
+

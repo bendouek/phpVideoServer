@@ -1,10 +1,3 @@
-/* Main style rules*/
-
-/*Contents: TODO
-
-*/
-
-
 body {
   background-color: #000000;
   overflow-y: scroll;
@@ -12,7 +5,6 @@ body {
 }
 
 
-/* for debugging */
 .outline {
   border: dashed green 1px;
 }
@@ -30,19 +22,18 @@ body {
   margin: auto;
 }
 
-.vid-title {
+#vid-title {
   text-align: center;
-  padding: 10px;
 }
 
 /* hack to make iframe reponsive*/
-.video-wrapper {
+#video-wrapper {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 */
   padding-top: 25px;
   height: 0;
 }
-.video-wrapper iframe {
+#video-wrapper iframe {
   position: absolute;
   top: 0;
   left: 0;
